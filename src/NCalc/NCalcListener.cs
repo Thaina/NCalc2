@@ -20,10 +20,7 @@
 #pragma warning disable 419
 
 
-using System;
-using System.Text;
 using System.Globalization;
-using System.Collections.Generic;
 using NCalc.Domain;
 
 using Antlr4.Runtime.Misc;
@@ -68,55 +65,15 @@ public interface INCalcListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitConditionalExpression([NotNull] NCalcParser.ConditionalExpressionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.booleanAndExpression"/>.
+	/// Enter a parse tree produced by <see cref="NCalcParser.booleanExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterBooleanAndExpression([NotNull] NCalcParser.BooleanAndExpressionContext context);
+	void EnterBooleanExpression([NotNull] NCalcParser.BooleanExpressionContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.booleanAndExpression"/>.
+	/// Exit a parse tree produced by <see cref="NCalcParser.booleanExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitBooleanAndExpression([NotNull] NCalcParser.BooleanAndExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseOrExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBitwiseOrExpression([NotNull] NCalcParser.BitwiseOrExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseOrExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBitwiseOrExpression([NotNull] NCalcParser.BitwiseOrExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseXOrExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBitwiseXOrExpression([NotNull] NCalcParser.BitwiseXOrExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseXOrExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBitwiseXOrExpression([NotNull] NCalcParser.BitwiseXOrExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseAndExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBitwiseAndExpression([NotNull] NCalcParser.BitwiseAndExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseAndExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBitwiseAndExpression([NotNull] NCalcParser.BitwiseAndExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.equalityExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterEqualityExpression([NotNull] NCalcParser.EqualityExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.equalityExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitEqualityExpression([NotNull] NCalcParser.EqualityExpressionContext context);
+	void ExitBooleanExpression([NotNull] NCalcParser.BooleanExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="NCalcParser.relationalExpression"/>.
 	/// </summary>
@@ -178,15 +135,15 @@ public interface INCalcListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitPrimaryExpression([NotNull] NCalcParser.PrimaryExpressionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.val"/>.
+	/// Enter a parse tree produced by <see cref="NCalcParser.value"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterVal([NotNull] NCalcParser.ValContext context);
+	void EnterValue([NotNull] NCalcParser.ValueContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.val"/>.
+	/// Exit a parse tree produced by <see cref="NCalcParser.value"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitVal([NotNull] NCalcParser.ValContext context);
+	void ExitValue([NotNull] NCalcParser.ValueContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="NCalcParser.identifier"/>.
 	/// </summary>

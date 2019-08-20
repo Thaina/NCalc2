@@ -18,27 +18,20 @@ namespace NCalc.Tests
             _output = output;
         }
 
-        [Fact]
-        public void ExpressionShouldEvaluate()
+        [Theory]
+        [InlineData("2 + 3 + 5")]
+        [InlineData("2 * 3 + 5")]
+        [InlineData("2 * (3 + 5)")]
+        [InlineData("2 * (2*(2*(2+1)))")]
+        [InlineData("10 % 3")]
+        [InlineData("true or false")]
+        [InlineData("not(true)")]
+        [InlineData("false || not(false and true)")]
+        [InlineData("3 > 2 and 1 <= (3-2)")]
+        [InlineData("3 % 2 != 10 % 3")]
+        public void ExpressionShouldEvaluate(string expression)
         {
-            var expressions = new []
-            {
-                "2 + 3 + 5",
-                "2 * 3 + 5",
-                "2 * (3 + 5)",
-                "2 * (2*(2*(2+1)))",
-                "10 % 3",
-                "true or false",
-                "not true",
-                "false || not (false and true)",
-                "3 > 2 and 1 <= (3-2)",
-                "3 % 2 != 10 % 3"
-            };
-
-            foreach (string expression in expressions)
-                _output.WriteLine("{0} = {1}",
-                    expression,
-                    new Expression(expression).Evaluate());
+            _output.WriteLine("{0} = {1}",expression,new Expression(expression).Evaluate());
         }
 
         [Fact]
@@ -209,47 +202,40 @@ namespace NCalc.Tests
 
         }
 
-        [Fact]
-        public void ShouldEvaluateOperators()
+        [Theory]
+        [InlineData("!true", false)]
+        [InlineData("not(false)", true)]
+        [InlineData("2 * 3", 6)]
+        [InlineData("6 / 2", 3d)]
+        [InlineData("7 % 2", 1)]
+        [InlineData("2 + 3", 5)]
+        [InlineData("2 - 1", 1)]
+        [InlineData("1 < 2", true)]
+        [InlineData("1 > 2", false)]
+        [InlineData("1 <= 2", true)]
+        [InlineData("1 <= 1", true)]
+        [InlineData("1 >= 2", false)]
+        [InlineData("1 >= 1", true)]
+        [InlineData("1 = 1", true)]
+        [InlineData("1 == 1", true)]
+        [InlineData("1 != 1", false)]
+        [InlineData("1 <> 1", false)]
+        [InlineData("1 & 1", 1)]
+        [InlineData("1 | 1", 1)]
+        [InlineData("1 ^ 1", 0)]
+        [InlineData("~1", ~1)]
+        [InlineData("2 >> 1", 1)]
+        [InlineData("2 << 1", 4)]
+        [InlineData("true && false", false)]
+        [InlineData("true and false", false)]
+        [InlineData("true || false", true)]
+        [InlineData("true or false", true)]
+        [InlineData("if(true, 0, 1)", 0)]
+        [InlineData("if(false, 0, 1)", 1)]
+        public void ShouldEvaluateOperators(string key,object value)
         {
-            var expressions = new Dictionary<string, object>
-                                  {
-                                      {"!true", false},
-                                      {"not false", true},
-                                      {"2 * 3", 6},
-                                      {"6 / 2", 3d},
-                                      {"7 % 2", 1},
-                                      {"2 + 3", 5},
-                                      {"2 - 1", 1},
-                                      {"1 < 2", true},
-                                      {"1 > 2", false},
-                                      {"1 <= 2", true},
-                                      {"1 <= 1", true},
-                                      {"1 >= 2", false},
-                                      {"1 >= 1", true},
-                                      {"1 = 1", true},
-                                      {"1 == 1", true},
-                                      {"1 != 1", false},
-                                      {"1 <> 1", false},
-                                      {"1 & 1", 1},
-                                      {"1 | 1", 1},
-                                      {"1 ^ 1", 0},
-                                      {"~1", ~1},
-                                      {"2 >> 1", 1},
-                                      {"2 << 1", 4},
-                                      {"true && false", false},
-                                      {"true and false", false},
-                                      {"true || false", true},
-                                      {"true or false", true},
-                                      {"if(true, 0, 1)", 0},
-                                      {"if(false, 0, 1)", 1}
-                                  };
-
-            foreach (KeyValuePair<string, object> pair in expressions)
-            {
-                Assert.Equal(pair.Value, new Expression(pair.Key).Evaluate());
-            }
-
+            _output.WriteLine(key + " == " + value);
+            Assert.Equal(value,new Expression(key).Evaluate());
         }
 
         [Fact]
@@ -271,17 +257,9 @@ namespace NCalc.Tests
         }
 
         [Fact]
-        public void ShouldThrowAnExpcetionWhenInvalidNumber()
+        public void ShouldThrowAnExceptionWhenInvalidNumber()
         {
-            try
-            {
-                new Expression("4. + 2").Evaluate();
-                throw new Exception();
-            }
-            catch (EvaluationException e)
-            {
-                _output.WriteLine("Error catched: " + e.Message);
-            }
+            Assert.Throws<EvaluationException>(() => new Expression("4. + 2").Evaluate());
         }
 
         [Fact]
@@ -590,6 +568,16 @@ namespace NCalc.Tests
         }
 
         [Theory]
+        [InlineData("X1 != 1",false)]
+        public void ShouldOptionallyCalculateBoolean(string formula, object expectedValue)
+        {
+            var expression = new Expression(formula, EvaluateOptions.BooleanCalculation) {Parameters = {["X1"] = 1}};
+
+            var obj = expression.Evaluate();
+            expression.Evaluate().Should().BeEquivalentTo(expectedValue);
+        }
+
+        [Theory]
         [InlineData("(X1 = 1)/2", 0.5)]
         [InlineData("(X1 = 1)*2", 2)]
         [InlineData("(X1 = 1)+1", 2)]
@@ -602,7 +590,8 @@ namespace NCalc.Tests
         {
             var expression = new Expression(formula, EvaluateOptions.BooleanCalculation) {Parameters = {["X1"] = 1}};
 
-            expression.Evaluate().Should().Be(expectedValue);
+            var obj = expression.Evaluate();
+            expression.Evaluate().Should().BeEquivalentTo(expectedValue);
 
             var lambda = expression.ToLambda<object>();
             lambda().Should().Be(expectedValue);

@@ -20,10 +20,7 @@
 #pragma warning disable 419
 
 
-using System;
-using System.Text;
 using System.Globalization;
-using System.Collections.Generic;
 using NCalc.Domain;
 
 
@@ -78,65 +75,17 @@ public partial class NCalcBaseListener : INCalcListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitConditionalExpression([NotNull] NCalcParser.ConditionalExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.booleanAndExpression"/>.
+	/// Enter a parse tree produced by <see cref="NCalcParser.booleanExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBooleanAndExpression([NotNull] NCalcParser.BooleanAndExpressionContext context) { }
+	public virtual void EnterBooleanExpression([NotNull] NCalcParser.BooleanExpressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.booleanAndExpression"/>.
+	/// Exit a parse tree produced by <see cref="NCalcParser.booleanExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBooleanAndExpression([NotNull] NCalcParser.BooleanAndExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseOrExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBitwiseOrExpression([NotNull] NCalcParser.BitwiseOrExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseOrExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBitwiseOrExpression([NotNull] NCalcParser.BitwiseOrExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseXOrExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBitwiseXOrExpression([NotNull] NCalcParser.BitwiseXOrExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseXOrExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBitwiseXOrExpression([NotNull] NCalcParser.BitwiseXOrExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.bitwiseAndExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBitwiseAndExpression([NotNull] NCalcParser.BitwiseAndExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.bitwiseAndExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBitwiseAndExpression([NotNull] NCalcParser.BitwiseAndExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.equalityExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterEqualityExpression([NotNull] NCalcParser.EqualityExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.equalityExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitEqualityExpression([NotNull] NCalcParser.EqualityExpressionContext context) { }
+	public virtual void ExitBooleanExpression([NotNull] NCalcParser.BooleanExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="NCalcParser.relationalExpression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -210,17 +159,17 @@ public partial class NCalcBaseListener : INCalcListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPrimaryExpression([NotNull] NCalcParser.PrimaryExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="NCalcParser.val"/>.
+	/// Enter a parse tree produced by <see cref="NCalcParser.value"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterVal([NotNull] NCalcParser.ValContext context) { }
+	public virtual void EnterValue([NotNull] NCalcParser.ValueContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="NCalcParser.val"/>.
+	/// Exit a parse tree produced by <see cref="NCalcParser.value"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitVal([NotNull] NCalcParser.ValContext context) { }
+	public virtual void ExitValue([NotNull] NCalcParser.ValueContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="NCalcParser.identifier"/>.
 	/// <para>The default implementation does nothing.</para>

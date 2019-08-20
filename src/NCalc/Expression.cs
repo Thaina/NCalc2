@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using NCalc.Domain;
 using Antlr4.Runtime;
+using System.IO;
 
 namespace NCalc
 {
@@ -97,9 +98,81 @@ namespace NCalc
             }
         }
 
-        #endregion
+		#endregion
+        public class EvaluationExceptionStrategy : DefaultErrorStrategy,IAntlrErrorListener<int>
+		{
+            /// <summary>
+            /// Instead of recovering from exception
+            /// <paramref name="e"/>
+            /// , re-throw it wrapped
+            /// in a
+            /// <see cref="ParseCanceledException"/>
+            /// so it is not caught by the
+            /// rule function catches.  Use
+            /// <see cref="System.Exception.InnerException()"/>
+            /// to get the
+            /// original
+            /// <see cref="RecognitionException"/>
+            /// .
+            /// </summary>
+            public override void Recover(Parser recognizer, RecognitionException e)
+            {
+                for (ParserRuleContext context = recognizer.Context; context != null; context = ((ParserRuleContext)context.Parent))
+                {
+                    context.exception = e;
+                }
+                throw new EvaluationException(e.Message);
+            }
 
-        public static LogicalExpression Compile(string expression, bool nocache)
+			/// <summary>
+			/// Make sure we don't attempt to recover inline; if the parser
+			/// successfully recovers, it won't throw an exception.
+			/// </summary>
+			/// <remarks>
+			/// Make sure we don't attempt to recover inline; if the parser
+			/// successfully recovers, it won't throw an exception.
+			/// </remarks>
+			/// <exception cref="Antlr4.Runtime.RecognitionException"/>
+			public override IToken RecoverInline(Parser recognizer)
+			{
+				InputMismatchException e = new InputMismatchException(recognizer);
+				for(ParserRuleContext context = recognizer.Context; context != null; context = ((ParserRuleContext)context.Parent))
+				{
+					context.exception = e;
+				}
+                
+                if(recognizer is NCalcParser parser)
+                {
+                    if(parser.Errors == null)
+                        parser.Errors = new List<string>();
+
+                    parser.Errors.Add(e.Message);
+                }
+
+				throw e;
+			}
+
+			/// <summary>Make sure we don't attempt to recover from problems in subrules.</summary>
+			/// <remarks>Make sure we don't attempt to recover from problems in subrules.</remarks>
+			public override void Sync(Parser recognizer)
+			{
+			}
+
+			public void SyntaxError(TextWriter output,IRecognizer recognizer,int offendingSymbol,int line,int charPositionInLine,string msg,RecognitionException e)
+			{
+                if(recognizer is NCalcParser parser)
+                {
+                    if(parser.Errors == null)
+                        parser.Errors = new List<string>();
+
+                    parser.Errors.Add(e.Message);
+                }
+
+				throw new EvaluationException(msg + "at " + line + ":" + charPositionInLine);
+			}
+		}
+
+		public static LogicalExpression Compile(string expression, bool nocache)
         {
             LogicalExpression logicalExpression = null;
 
@@ -129,10 +202,12 @@ namespace NCalc
 
             if (logicalExpression == null)
             {
+                var strategy    = new EvaluationExceptionStrategy();
                 var lexer = new NCalcLexer(Antlr4.Runtime.CharStreams.fromstring(expression));
-                var parser = new NCalcParser(new CommonTokenStream(lexer));
+                lexer.AddErrorListener(strategy);
+                var parser = new NCalcParser(new CommonTokenStream(lexer)){ ErrorHandler = strategy };
 
-                logicalExpression = parser.ncalcExpression().value;
+                logicalExpression = parser.ncalcExpression().val;
 
                 if (parser.Errors != null && parser.Errors.Count > 0)
                 {
