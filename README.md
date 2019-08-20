@@ -1,3 +1,11 @@
+# This repo is a clone of NCalc2, not an actual one
+
+Changing from base repo. Using vscode antlr extension with antlr4 (base repo use antlr3)
+
+Allow bracket in argument name, eg : ("1 + [a[0][0]] / [[bc[]de]]") can be parsed and get argument "a[0][0]" and [bc[]de]
+
+Information Below come from the origin repo. Does not apply to this repo
+
 # NCalc
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ugw4wg1iws3far9m?svg=true)](https://ci.appveyor.com/project/sklose/ncalc2) [![NuGet](https://img.shields.io/nuget/v/CoreCLR-NCalc.svg)](https://www.nuget.org/packages/CoreCLR-NCalc) [![NuGet](https://img.shields.io/nuget/dt/CoreCLR-NCalc.svg)](https://www.nuget.org/packages/CoreCLR-NCalc)
