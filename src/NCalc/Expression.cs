@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Threading;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+
 using NCalc.Domain;
-using Antlr.Runtime;
-using System.Diagnostics;
-using System.Threading;
+using Antlr4.Runtime;
 
 namespace NCalc
 {
-    public class Expression
+	public class Expression
     {
         public EvaluateOptions Options { get; set; }
 
@@ -128,7 +129,7 @@ namespace NCalc
 
             if (logicalExpression == null)
             {
-                var lexer = new NCalcLexer(new ANTLRStringStream(expression));
+                var lexer = new NCalcLexer(Antlr4.Runtime.CharStreams.fromstring(expression));
                 var parser = new NCalcParser(new CommonTokenStream(lexer));
 
                 logicalExpression = parser.ncalcExpression().value;

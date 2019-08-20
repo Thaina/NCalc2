@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/sklose/NCalc2</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/sklose/NCalc2</RepositoryUrl>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.3' ">1.6.0</NetStandardImplicitPackageVersion>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.3' ">1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -33,4 +33,7 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.2" />
+  </ItemGroup>
 </Project>

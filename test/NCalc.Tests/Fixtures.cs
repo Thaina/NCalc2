@@ -82,15 +82,7 @@ namespace NCalc.Tests
         [Fact]
         public void ShouldDisplayErrorMessages()
         {
-            try
-            {
-                new Expression("(3 + 2").Evaluate();
-                throw new Exception();
-            }
-            catch(EvaluationException e)
-            {
-                _output.WriteLine("Error catched: " + e.Message);
-            }
+            Assert.Throws<EvaluationException>(() => new Expression("(3 + 2").Evaluate());
         }
 
         [Fact]

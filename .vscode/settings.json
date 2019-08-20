@@ -1,0 +1,9 @@
+{
+    "antlr4.generation": {
+        "mode": "external",
+        "language": "CSharp",
+        "listeners": true,
+        "visitors": false,
+        "outputDir": "..\\src\\NCalc"
+    }
+}
