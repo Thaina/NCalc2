@@ -2,7 +2,9 @@
 
 Changing from base repo. Using vscode antlr extension with antlr4 (base repo use antlr3)
 
-Allow bracket in argument name, eg : `1 + [a[0][0]] / [[bc[]de]]` can be parsed and get argument `a[0][0]` and `[bc[]de]`
+Allow bracket in argument name
+eg : `1 + [a[0][0]] / [[bc[]de]]`
+can be parsed to get argument `"a[0][0]"` and `"[bc[]de]"`
 
 Information Below come from the origin repo. Does not apply to this repo
 
