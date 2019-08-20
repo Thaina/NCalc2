@@ -122,11 +122,29 @@ namespace NCalc.Tests
             e.Parameters["e"] = 3;
             e.Parameters["f"] = 1;
 
-            e.EvaluateFunction += delegate(string name, FunctionArgs args)
-                {
-                    if (name == "SecretOperation")
-                        args.Result = (int)args.Parameters[0].Evaluate() + (int)args.Parameters[1].Evaluate();
-                };
+            e.EvaluateFunction += (name,args) => {
+                if (name == "SecretOperation")
+                    args.Result = (int)args.Parameters[0].Evaluate() + (int)args.Parameters[1].Evaluate();
+            };
+
+            Assert.Equal(10, e.Evaluate());
+        }
+
+        [Fact]
+        public void ExpressionShouldEvaluateCustomFunctionsWithComplexParameters()
+        {
+            var e = new Expression("SecretOperation([e[0]], 6) + [[f[d]]]");
+            e.Parameters["e[0]"] = 3;
+
+            e.EvaluateFunction += (name,args) => {
+                if (name == "SecretOperation")
+                    args.Result = (int)args.Parameters[0].Evaluate() + (int)args.Parameters[1].Evaluate();
+            };
+
+            e.EvaluateParameter += (name,args) => {
+                if (name == "[f[d]]")
+                    args.Result = 1;
+            };
 
             Assert.Equal(10, e.Evaluate());
         }
