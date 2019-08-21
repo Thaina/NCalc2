@@ -320,6 +320,28 @@ namespace NCalc
             return lambda.Compile();
         }
 
+        public T? Evaluate<T>() where T : struct,IConvertible => Evaluate<T>(out var value) ? value : (T?)null;
+        public bool Evaluate<T>(out T val) where T : struct,IConvertible
+        {
+            var obj = Evaluate();
+            if(obj == null || obj is string)
+            {
+                val = default(T);
+                return false;
+            }
+
+            try
+            {
+                val   = obj is T value ? value : (T)Convert.ChangeType(obj,typeof(T));
+                return true;
+            }
+            catch
+            {
+                val = default(T);
+                return false;
+            }
+        }
+
         public object Evaluate()
         {
             if (HasErrors())
@@ -412,6 +434,5 @@ namespace NCalc
             get { return _parameters ?? (_parameters = new Dictionary<string, object>()); }
             set { _parameters = value; }
         }
-
     }
 }
